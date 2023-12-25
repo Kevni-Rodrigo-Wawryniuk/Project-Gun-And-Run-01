@@ -11,6 +11,8 @@ TagManager:
   - Ladder
   - Wall
   - BladeCount
+  - PositionPlayer
+  - PointReset
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Ladder
   - Wall
   - BladeCount
-  - 
+  - PointReset
   - 
   - 
   - 

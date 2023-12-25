@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Project-Run-And-Gun-01.sln"
+    "dotnet.defaultSolution": "Project-Gun-And-Run-01.sln"
 }

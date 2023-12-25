@@ -14,6 +14,10 @@ public class ControlPlayer : MonoBehaviour
 {
     public static ControlPlayer controlPlayer;
 
+    [Header("Retornar al punto de inicio")]
+    public bool resetPoint;
+    [SerializeField] Transform positionReset;
+
     [Header("Subir Escaleras")]
     public bool ladder;
     [SerializeField] float forceLadder;
@@ -21,7 +25,6 @@ public class ControlPlayer : MonoBehaviour
     [SerializeField] Transform positionDetectorLadder;
     [SerializeField] Vector2 sizeLadder;
     [SerializeField] LayerMask layerLadder;
-
 
     [Header("Collicion con balas")]
     public bool collicionBullets;
@@ -106,6 +109,8 @@ public class ControlPlayer : MonoBehaviour
     {
         // SALTOS
         Jumps();
+        // VOLVER AL PUNTOD DE RESURRECCION
+        RestartPositon();
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -116,6 +121,19 @@ public class ControlPlayer : MonoBehaviour
                 positionBullet = other.collider.transform.position;
 
                 StartCoroutine(CollisionBullet());
+            }
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("PointReset"))
+        {
+            if (resetPoint == true)
+            {
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    positionReset = other.transform;
+                }
             }
         }
     }
@@ -143,6 +161,16 @@ public class ControlPlayer : MonoBehaviour
         Gizmos.DrawWireCube(positionDetectorLadder.position, sizeLadder);
     }
     ///////////////////////////////////////////////////////////////////////////////////////
+
+    //      ACTIVAR PUNTO DE RETORNO       //
+    private void RestartPositon(){
+        if(resetPoint == true){
+            if(Input.GetKeyDown(KeyCode.V)){
+                transform.position = positionReset.position;
+            }
+        }
+    }
+    //                                     //
 
     //      SUBIR ESCALERAS     //
     private bool DetectLadder()
@@ -383,10 +411,12 @@ public class ControlPlayer : MonoBehaviour
     {
         if (jump == true)
         {
-            if(jump_1 == true && jump_2 == false){
+            if (jump_1 == true && jump_2 == false)
+            {
                 maxJumps = 1;
             }
-            if(jump_1 == false && jump_2 == true){
+            if (jump_1 == false && jump_2 == true)
+            {
                 maxJumps = 2;
             }
             if (countJumps == maxJumps && !DetectFloor())
